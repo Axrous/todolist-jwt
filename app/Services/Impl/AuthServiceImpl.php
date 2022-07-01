@@ -56,6 +56,7 @@ class AuthServiceImpl implements AuthService {
         ]);
 
         $token = Auth::login($user);
+        
 
         return [
             'user' => $user,

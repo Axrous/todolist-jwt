@@ -35,12 +35,18 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'user' => $result['user'],
+            'user' => [
+                'id' => $result['user']['id'],
+                'name' => $result['user']['name'],
+            ],
             'authorisation' => [
                 'token' => $result['token'],
                 'type' => 'bearer'
             ]
-            ],200);    
+            ],200)->withHeaders([
+                'X-USER-TOKEN' => $result['token']
+            ]);
+            // ->withCookie('X-USER-TOKEN', $result['token']);    
     }
 
     public function register(Request $request) {
