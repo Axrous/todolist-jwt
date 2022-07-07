@@ -36,4 +36,5 @@ Route::post('/refresh', [AuthController::class, 'refresh']);
 
 Route::controller(TodoController::class)->group(function () {
     Route::post('todo', 'store');
+    Route::get('todos', 'show');
 });

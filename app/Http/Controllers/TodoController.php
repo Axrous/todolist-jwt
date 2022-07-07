@@ -42,4 +42,28 @@ class TodoController extends Controller
             "todo" => $result   
         ]);
     }
+
+    public function show() {
+        $idUser = auth()->id();
+
+        try {
+            $result = $this->todoService->showAllTodo($idUser);
+        } catch(Exception $exception) {
+            return response()->json([
+                'status' => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ]);
+        }
+        if($result == null) {
+            return response()->json([
+                "status" => 'success',
+                "message" => 'NO TODO'
+            ]);
+        }
+
+        return response()->json([
+            "status" => 'success',
+            "todos" => $result   
+        ]);
+    }
 }
