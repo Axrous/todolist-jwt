@@ -61,9 +61,9 @@ class TodoServiceImpl implements TodoService {
         
     }
 
-    public function updateTodo($id, $data)
+    public function updateTodo($todo, $id)
     {
-        $validation = Validator::make($data,[
+        $validation = Validator::make($todo,[
             'title' => 'required|string|max:100',
             'description' => 'required|string|max:255'
         ]);
@@ -72,17 +72,31 @@ class TodoServiceImpl implements TodoService {
             return new Exception($validation->errors()->first());
         }
 
-        $todo = $this->todo::where('id', $id)->update([
-            'title' => $validation['title'],
-            'description' => $validation['description']
-        ]);
+        // $result = $this->todo::where('id', $id)
+        //     ->update([
+        //         "title" => $todo['title'],
+        //         "description" => $todo['description']
+        //     ]);
 
-        return $todo;
+        $result = $this->todo::find($id);
+
+        if($result == null) {
+            return null;
+        }
+
+        $result->title = $todo['title'];
+        $result->description = $todo['description'];
+        $result->save();
+        return $result;
     }
 
     public function deleteTodo($id)
     {
-        
+        $result = $this->todo::find($id);
+
+        $result->delete();
+
+        return $result;
     }
 
 }

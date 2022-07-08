@@ -21,13 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// Route::controller(AuthController::class)->group(function () {
-//     Route::post('login', 'login');
-//     Route::post('register', 'store');
-//     Route::post('logout', 'logout');
-//     Route::post('refresh', 'refresh');
-// });
-
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout']);
@@ -37,4 +30,7 @@ Route::post('/refresh', [AuthController::class, 'refresh']);
 Route::controller(TodoController::class)->group(function () {
     Route::post('todo', 'store');
     Route::get('todos', 'show');
+    Route::put('update-todo/{id}', 'update');
+    Route::get('todo/{id}', 'showDetail');
+    Route::delete('todo/{id}', 'destroy');
 });
